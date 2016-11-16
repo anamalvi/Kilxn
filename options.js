@@ -157,62 +157,47 @@ function makeGoBut () {
 }
 
 function editKlxn () {
-    if (selectedRows.length == 0) {
-        alert("No images have been selected.");
-    }
-    else {
-        chrome.storage.local.get("klxn", function(items) {
-            var klxn =  items.klxn;
-            for (var i = selectedRows.length - 1; i>= 0; i--) {
-                // check inputs have values to change
-                if (newDes.value && newTags.value) {
-                    klxn[selectedRows[i]/2].desc = newDes.value;
-                    klxn[selectedRows[i]/2].imgTags = newTags.value;
-                } else if (!newDes.value && newTags.value) {
-                    klxn[selectedRows[i]/2].imgTags = newTags.value;
-                } else if (!newTags.value && newDes.value) {
-                    klxn[selectedRows[i]/2].desc = newDes.value;
-                }
+    chrome.storage.local.get("klxn", function(items) {
+        var klxn =  items.klxn;
+        for (var i = selectedRows.length - 1; i>= 0; i--) {
+            // check inputs have values to change
+            if (newDes.value && newTags.value) {
+                klxn[selectedRows[i]/2].desc = newDes.value;
+                klxn[selectedRows[i]/2].imgTags = newTags.value;
+            } else if (!newDes.value && newTags.value) {
+                klxn[selectedRows[i]/2].imgTags = newTags.value;
+            } else if (!newTags.value && newDes.value) {
+                klxn[selectedRows[i]/2].desc = newDes.value;
             }
-            chrome.storage.local.set({klxn: klxn});
-        });
-        location.reload();
-    }
+        }
+        chrome.storage.local.set({klxn: klxn});
+    });
+    location.reload();
 }
 
 function addTags () {
-    if (selectedRows.length == 0) {
-        alert("No images have been selected.");
-    }
-    else {
-        chrome.storage.local.get("klxn", function(items) {
-        var klxn =  items.klxn;
-        for (var i = selectedRows.length - 1; i>= 0; i--) {
-            if (klxn[selectedRows[i]/2].imgTags == "") {
-              klxn[selectedRows[i]/2].imgTags += ", ";  
-            }
-            klxn[selectedRows[i]/2].imgTags += newTagsBox.value;
+    chrome.storage.local.get("klxn", function(items) {
+    var klxn =  items.klxn;
+    for (var i = selectedRows.length - 1; i>= 0; i--) {
+        if (klxn[selectedRows[i]/2].imgTags == "") {
+          klxn[selectedRows[i]/2].imgTags += ", ";  
         }
-        chrome.storage.local.set({klxn: klxn});
-        });
-        location.reload();
+        klxn[selectedRows[i]/2].imgTags += newTagsBox.value;
     }
+    chrome.storage.local.set({klxn: klxn});
+    });
+    location.reload();
 }
 
 function deleteSelected() {
-    if (selectedRows.length == 0) {
-        alert("No images have been selected.");
-    }
-    else {
-    	chrome.storage.local.get("klxn", function(items) {
-            var klxn =  items.klxn;
-            for (var i = selectedRows.length - 1; i>= 0; i--) {
-                klxn.splice(selectedRows[i]/2, 1);
-            }
-            chrome.storage.local.set({klxn: klxn});
-        });
-        location.reload();
-    }
+	chrome.storage.local.get("klxn", function(items) {
+        var klxn =  items.klxn;
+        for (var i = selectedRows.length - 1; i>= 0; i--) {
+            klxn.splice(selectedRows[i]/2, 1);
+        }
+        chrome.storage.local.set({klxn: klxn});
+    });
+    location.reload();
 }
 
 // It'll be faster for bigger klxns to keep track of an array of selected
