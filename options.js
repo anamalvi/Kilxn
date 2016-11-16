@@ -157,15 +157,25 @@ function makeGoBut () {
 }
 
 function editKlxn () {
-    if (selectedRows.length == 0) {
-        alert("No images have been selected.");
+    if (selectedRows.length > 0) {
+        // this does not work
+        location.reload();
     }
     else {
         chrome.storage.local.get("klxn", function(items) {
             var klxn =  items.klxn;
+            console.log("new description = " + newDes.value);
+            console.log("new tags = " + newTags.value);
             for (var i = selectedRows.length - 1; i>= 0; i--) {
-                klxn[selectedRows[i]/2].desc = newDes.value;
-                klxn[selectedRows[i]/2].imgTags = newTags.value;
+                // check inputs have values to change
+                if (newDes.value && newTags.value) {
+                    klxn[selectedRows[i]/2].desc = newDes.value;
+                    klxn[selectedRows[i]/2].imgTags = newTags.value;
+                } else if (!newDes.value && newTags.value) {
+                    klxn[selectedRows[i]/2].imgTags = newTags.value;
+                } else if (!newTags.value && newDes.value) {
+                    klxn[selectedRows[i]/2].desc = newDes.value;
+                }
             }
             chrome.storage.local.set({klxn: klxn});
         });
