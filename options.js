@@ -320,15 +320,22 @@ function showAddTagBox () {
 document.getElementById('menu').addEventListener('change', function () {
             hideEdits();
     if (menu.selectedIndex == 1) {
-        showEditBoxes();
+        if (selectedRows.length > 0) {
+            showEditBoxes();
+        }
     }
     else if (menu.selectedIndex == 2) {
-        showAddTagBox();
+        if (selectedRows.length > 0) {
+            showAddTagBox();
+        }
     }
     else if (menu.selectedIndex == 3) {
-        makeGoBut();
-        go.value = "Remove";
-        document.getElementById('go').addEventListener('click', deleteSelected);
+        if (selectedRows.length > 0) {
+            makeGoBut();
+            go.value = "Remove";
+            document.getElementById('go').addEventListener('click', deleteSelected);
+        }
+        
     }
 });
 
