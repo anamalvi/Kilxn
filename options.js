@@ -158,14 +158,11 @@ function makeGoBut () {
 
 function editKlxn () {
     if (selectedRows.length > 0) {
-        // this does not work
-        location.reload();
+        alert("No images have been selected.");
     }
     else {
         chrome.storage.local.get("klxn", function(items) {
             var klxn =  items.klxn;
-            console.log("new description = " + newDes.value);
-            console.log("new tags = " + newTags.value);
             for (var i = selectedRows.length - 1; i>= 0; i--) {
                 // check inputs have values to change
                 if (newDes.value && newTags.value) {
