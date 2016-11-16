@@ -157,7 +157,7 @@ function makeGoBut () {
 }
 
 function editKlxn () {
-    if (selectedRows.length > 0) {
+    if (selectedRows.length == 0) {
         alert("No images have been selected.");
     }
     else {
